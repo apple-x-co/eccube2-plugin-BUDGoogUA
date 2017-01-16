@@ -10,12 +10,20 @@ class plg_BUDGoogUA_SC_Utils
     const CONFIG_TABLE_NAME = 'plg_budgoogua_config';
     const FIELD_TRACKING_ID = 'tracking_id';
     
-    function sfCreateTable() {
-    	// FIXME
+    function sfGetCreateTableDDL() {
+    	$ddl = <<< __EOS__
+create table plg_budgoogua_config (
+  config_id integer not null primary key auto_increment,
+  tracking_id varchar(100) not null,
+  update_date datetime not null
+)
+__EOS__;
+    	return $ddl;
     }
     
-    function sfDropTable() {
-    	// FIXME
+    function sfGetDropTableDDL() {
+    	$ddl = "drop table plg_budgoogua_config";
+    	return $ddl;
     }
     
 	function sfGetTrackingID() {
@@ -26,9 +34,9 @@ class plg_BUDGoogUA_SC_Utils
 		return $objQuery->get(self::FIELD_TRACKING_ID, self::CONFIG_TABLE_NAME);
 	}
 	
-	function sfUpdateTrackingID($prop) {
+	function sfUpdateProperties($prop) {
 		$new_prop = array();
-		$new_prop['tracking_id'] = $properties['tracking_id'];
+		$new_prop['tracking_id'] = $prop['tracking_id'];
 		$new_prop['update_date'] = 'CURRENT_TIMESTAMP';
 		
 		$objQuery =& SC_Query_Ex::getSingletonInstance();

@@ -1,6 +1,7 @@
 <?php
 require_once CLASS_EX_REALDIR . 'page_extends/admin/LC_Page_Admin_Ex.php';
- 
+require_once PLUGIN_UPLOAD_REALDIR . 'BUDGoogUA/class/util/plg_BUDGoogUA_SC_Utils.php';
+
 class LC_Page_Plugin_BUDGoogUA_Config extends LC_Page_Admin_Ex {
     
 	// DB
@@ -9,9 +10,6 @@ class LC_Page_Plugin_BUDGoogUA_Config extends LC_Page_Admin_Ex {
 	// FORM
 	// http://blog.livedoor.jp/kuworks/archives/50510206.html
 	
-    const TABLE_NAME = 'plg_budgoogua_config';
-    const FIELD_TRACKING_ID = 'tracking_id';
-
     var $arrForm = array();
     
     /**
@@ -60,12 +58,8 @@ class LC_Page_Plugin_BUDGoogUA_Config extends LC_Page_Admin_Ex {
             }
             break;
         default:
-        	$objQuery =& SC_Query_Ex::getSingletonInstance();
-        	$arrForm[self::FIELD_TRACKING_ID] = 'UA-';
-        	if ($objQuery->exists(self::TABLE_NAME)) {
-     		   	$ret = $objQuery->get(self::FIELD_TRACKING_ID, self::TABLE_NAME);
-        		$arrForm[self::FIELD_TRACKING_ID] = $ret;
-           	}
+        	$tracking_id = plg_BUDGoogUA_SC_Utils::sfGetTrackingID();
+        	$arrForm['tracking_id'] = $ret;
             break;
         }
         $this->arrForm = $arrForm;
@@ -98,19 +92,10 @@ class LC_Page_Plugin_BUDGoogUA_Config extends LC_Page_Admin_Ex {
     function updateData($arrData) {
         $arrErr = array();
         
-        $values = array();
-        $values['tracking_id'] = $arrData['tracking_id'];
-        $values['update_date'] = 'CURRENT_TIMESTAMP';
-        
-       	$objQuery =& SC_Query_Ex::getSingletonInstance();
-       	$objQuery->begin();
-       	if ($objQuery->exists(self::TABLE_NAME)) {
-       		$ret = $objQuery->update(self::TABLE_NAME, $values);
-       	}
-       	else {
-       		$ret = $objQuery->insert(self::TABLE_NAME, $values);
-       	}
-       	$objQuery->commit();
+        $arrProps = array();
+        $arrProps['tracking_id'] = $arrData['tracking_id'];
+        $arrProps['update_date'] = 'CURRENT_TIMESTAMP';
+        plg_BUDGoogUA_SC_Utils::sfUpdateProperties($arrProps);
        	
         return $arrErr;
     }
