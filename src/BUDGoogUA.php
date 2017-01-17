@@ -41,10 +41,20 @@ class BUDGoogUA extends SC_Plugin_Base {
 	const PLUGIN_TEMPLATES_PATH = 'BUDGoogUA/templates/';
 	
 	function install($arrPlugin, $objPluginInstaller = null) {
+		if (is_null($objPluginInstaller)) {
+			plg_BUDGoogUA_SC_Utils::sfExecuteSQL(plg_BUDGoogUA_SC_Utils::sfGetCreateTableDDL());
+			return;
+		}
+		
     	$objPluginInstaller->sql(plg_BUDGoogUA_SC_Utils::sfGetCreateTableDDL());
     }
     
     function uninstall($arrPlugin, $objPluginInstaller = null) {
+    	if (is_null($objPluginInstaller)) {
+			plg_BUDGoogUA_SC_Utils::sfExecuteSQL(plg_BUDGoogUA_SC_Utils::sfGetDropTableDDL());
+    		return;
+		}
+		
     	$objPluginInstaller->sql(plg_BUDGoogUA_SC_Utils::sfGetDropTableDDL());
     }
     

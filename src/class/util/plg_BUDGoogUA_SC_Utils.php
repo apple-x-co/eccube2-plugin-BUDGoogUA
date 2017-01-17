@@ -101,4 +101,15 @@ __EOS__;
 		
 		$objQuery->commit();
 	}
+	
+	/**
+	 * SQLの実行
+	 *
+	 * @access public
+	 * @param string $sql SQL
+	 * @return なし
+	 */
+	function sfExecuteSQL($sql) {
+		// FIXME SC_Plugin_Installer::verifySql
+	}
 }
