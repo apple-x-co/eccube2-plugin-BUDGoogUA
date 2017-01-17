@@ -41,21 +41,23 @@ class BUDGoogUA extends SC_Plugin_Base {
 	const PLUGIN_TEMPLATES_PATH = 'BUDGoogUA/templates/';
 	
 	function install($arrPlugin, $objPluginInstaller = null) {
-		if (is_null($objPluginInstaller)) {
-			plg_BUDGoogUA_SC_Utils::sfExecuteSQL(plg_BUDGoogUA_SC_Utils::sfGetCreateTableDDL());
-			return;
-		}
-		
-    	$objPluginInstaller->sql(plg_BUDGoogUA_SC_Utils::sfGetCreateTableDDL());
+		self::executeSQL($objPluginInstaller, plg_BUDGoogUA_SC_Utils::sfGetCreateTableDDL());
     }
     
     function uninstall($arrPlugin, $objPluginInstaller = null) {
-    	if (is_null($objPluginInstaller)) {
-			plg_BUDGoogUA_SC_Utils::sfExecuteSQL(plg_BUDGoogUA_SC_Utils::sfGetDropTableDDL());
-    		return;
-		}
-		
-    	$objPluginInstaller->sql(plg_BUDGoogUA_SC_Utils::sfGetDropTableDDL());
+    	self::executeSQL($objPluginInstaller, plg_BUDGoogUA_SC_Utils::sfGetDropTableDDL());
+    }
+    
+    function enable($plugins) {
+    	// nop
+    }
+    
+    function disable($plugins) {
+    	// nop
+    }
+    
+    function register($helper_plugin) {
+    	// nop
     }
     
     function prefilterTransform(&$source, LC_Page_Ex $objPage, $filename) {
@@ -68,6 +70,23 @@ class BUDGoogUA extends SC_Plugin_Base {
 	
 	function preProcess(LC_Page_Ex $objPage) {
 		$objPage->plg_budgoogua_tracking_id = plg_BUDGoogUA_SC_Utils::sfGetTrackingID();
+	}
+	
+	/**
+	 * SQLの実行
+	 *
+	 * @access private
+	 * @param SC_Plugin_Installer $objPluginInstaller
+	 * @param string $sql
+	 * @return なし
+	 */
+	private static function executeSQL($objPluginInstaller, $sql) {
+		if (is_null($objPluginInstaller)) {
+			plg_BUDGoogUA_SC_Utils::sfExecuteSQL($sql);
+			return;
+		}
+		
+		$objPluginInstaller->sql($sql);
 	}
 }
 ?>

@@ -110,6 +110,7 @@ __EOS__;
 	 * @return なし
 	 */
 	public static function sfExecuteSQL($sql) {
-		// FIXME SC_Plugin_Installer::verifySql
+		$objQuery =& SC_Query_Ex::getSingletonInstance();
+		$objQuery->query($sql);
 	}
 }
