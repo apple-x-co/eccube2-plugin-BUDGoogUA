@@ -39,7 +39,7 @@ class plg_BUDGoogUA_SC_Utils
 	 * @param なし
 	 * @return なし
 	 */
-    function sfGetCreateTableDDL() {
+    public static function sfGetCreateTableDDL() {
     	$ddl = <<< __EOS__
 create table plg_budgoogua_config (
   config_id integer not null primary key auto_increment,
@@ -57,7 +57,7 @@ __EOS__;
 	 * @param なし
 	 * @return なし
 	 */
-    function sfGetDropTableDDL() {
+    public static function sfGetDropTableDDL() {
     	$ddl = "drop table plg_budgoogua_config";
     	return $ddl;
     }
@@ -69,7 +69,7 @@ __EOS__;
 	 * @param なし
 	 * @return なし
 	 */
-    function sfGetTrackingID() {
+    public static function sfGetTrackingID() {
 		$objQuery =& SC_Query_Ex::getSingletonInstance();
 		if (!$objQuery->exists(self::CONFIG_TABLE_NAME)) {
 			return null;
@@ -84,7 +84,7 @@ __EOS__;
 	 * @param array $arrProps 連想配列
 	 * @return なし
 	 */
-	function sfUpdateProperties($arrProps) {
+	public static function sfUpdateProperties($arrProps) {
 		$arrNewProps = array();
 		$arrNewProps['tracking_id'] = $arrProps['tracking_id'];
 		$arrNewProps['update_date'] = 'CURRENT_TIMESTAMP';
@@ -109,7 +109,7 @@ __EOS__;
 	 * @param string $sql SQL
 	 * @return なし
 	 */
-	function sfExecuteSQL($sql) {
+	public static function sfExecuteSQL($sql) {
 		// FIXME SC_Plugin_Installer::verifySql
 	}
 }
