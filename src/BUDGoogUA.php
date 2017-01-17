@@ -56,10 +56,6 @@ class BUDGoogUA extends SC_Plugin_Base {
     	// nop
     }
     
-    function register($helper_plugin) {
-    	// nop
-    }
-    
     function prefilterTransform(&$source, LC_Page_Ex $objPage, $filename) {
     	if (strcmp($filename, SITE_FRAME) === 0) {
 			$objTransform = new SC_Helper_Transform_Ex($source);
