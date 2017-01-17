@@ -8,5 +8,3 @@
   ga('send', 'pageview');
 
 </script>
-<!-- {php} -->
-<!-- {/php} -->
