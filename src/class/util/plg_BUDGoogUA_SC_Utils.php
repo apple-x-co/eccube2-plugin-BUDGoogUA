@@ -77,6 +77,13 @@ __EOS__;
 		return $objQuery->get(self::FIELD_TRACKING_ID, self::CONFIG_TABLE_NAME);
 	}
 	
+	public static function sfExistsTable() {
+		$objQuery =& SC_Query_Ex::getSingletonInstance();
+		$arrTableNames = $objQuery->listTables();
+		
+		return in_array(self::CONFIG_TABLE_NAME, $arrTableNames);
+	}
+	
 	/**
 	 * 情報の更新
 	 *
