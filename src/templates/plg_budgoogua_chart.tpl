@@ -1,6 +1,6 @@
 <h2>Google Universal Analytics</h2>
 
-<!--{if $tpl_budgoogua_auth_error_message}-->
+<!--{if $tpl_budgoogua_auth_error}-->
   <p>認証に失敗しました。アカウントでアプリケーション認証が済んでいないか、ID・パスワードが間違っています。</p>
 
 <!--{else}-->

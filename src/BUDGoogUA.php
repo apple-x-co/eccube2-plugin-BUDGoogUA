@@ -103,22 +103,29 @@ class BUDGoogUA extends SC_Plugin_Base {
      * @return なし
      */
 	function LC_Page_Admin_Home_action_after($objPage) {
-		//$arrParam = $this->loadData($objPage);
-		$arrParam = array('ga_id' => 'oak.sano@gmail.com', 'ga_pw' => 'D5iZQqRz');
 		
-		if (empty($arrParam['ga_id']) || empty($arrParam['ga_pw'])) {
-			return false;
-		}
 		
-		//require 'class/ext/gapi.class.php';
-		require_once(dirname(__FILE__) . "/class/ext/gapi.class.php");
+// 		//$arrParam = $this->loadData($objPage);
+// 		$arrParam = array('ga_id' => 'oak.sano@gmail.com', 'ga_pw' => 'D5iZQqRz', 'ga_view' => '98838645', 'token' => 'AIzaSyB0z_35q3Om8JImEfgBZlY_fhW5p6Ar-40');
 		
-		try {
-			$objGAClient = new gapi($arrParam['ga_id'] , $arrParam['ga_pw']);
-		}
-		catch (Exception $e) {
-			$objPage->tpl_budgoogua_auth_error = true;
-		};
+// 		GC_Utils::gfPrintLog(__LINE__ . ':' . print_r($arrParam, true));
+		
+// 		if (empty($arrParam['ga_id']) || empty($arrParam['ga_pw'])) {
+// 			return false;
+// 		}
+		
+// 		//require 'class/ext/gapi.class.php';
+// 		//require_once(dirname(__FILE__) . "/class/ext/gapi.class.php");
+// 		require_once PLUGIN_UPLOAD_REALDIR . 'BUDGoogUA/class/ext/gapi.class.php';
+		
+// 		try {
+// 			$objGAClient = new gapi($arrParam['ga_id'] , $arrParam['ga_pw'], $arrParam['token']);
+// 		}
+// 		catch (Exception $e) {
+// 			$objPage->tpl_budgoogua_auth_error = true;
+// 		};
+		
+// 		GC_Utils::gfPrintLog(__LINE__ . ':' . print_r($objGAClient, true));
 		
 // 		if (!empty($objGAClient)) {
 // 			$ga_profile_id = $arrParam['ga_view'];
@@ -130,7 +137,7 @@ class BUDGoogUA extends SC_Plugin_Base {
 // 			$end_date      = date("Y-m-t");
 // 			$start_index   = 1;
 // 			$max_results   = 10000;
-		
+			
 // 			$objGAClient->requestReportData(
 // 					$ga_profile_id,
 // 					$dimensions,
@@ -143,7 +150,9 @@ class BUDGoogUA extends SC_Plugin_Base {
 // 					$max_results
 // 			);
 // 			$arrGoogleAnalyticsGraph = $objGAClient->getResults();
-		
+			
+// 			GC_Utils::gfPrintLog(__LINE__ . ':' . print_r($arrGoogleAnalyticsGraph, true));
+				
 // 			/* 売上情報取得 */
 // 			$objQuery = SC_Query_Ex::getSingletonInstance();
 // 			$where    = ' del_flg = 0';
@@ -157,13 +166,13 @@ class BUDGoogUA extends SC_Plugin_Base {
 		
 // 			$objQuery->setGroupBy('str_date');
 // 			$objQuery->setOrder('str_date');
-		
+			
 // 			$dbFactory = SC_DB_DBFactory_Ex::getInstance();
 // 			$col = $dbFactory->getOrderTotalDaysWhereSql('');
-		
+			
 // 			$arrTotalResults = $objQuery->select($col, 'dtb_order', $where, $arrWhereVal);
 // 			$arrTotalMerge = array();
-		
+			
 // 			/* GA DATA and Salse Data Merge */
 // 			foreach ($arrGoogleAnalyticsGraph as $row) {
 // 				$strDate = $row->getYear() . '-' .$row->getMonth() . '-' . $row->getDay();
