@@ -110,7 +110,8 @@ class BUDGoogUA extends SC_Plugin_Base {
 			return false;
 		}
 		
-		require 'class/ext/gapi.class.php';
+		//require 'class/ext/gapi.class.php';
+		require_once(dirname(__FILE__) . "/class/ext/gapi.class.php");
 		
 		try {
 			$objGAClient = new gapi($arrParam['ga_id'] , $arrParam['ga_pw']);
