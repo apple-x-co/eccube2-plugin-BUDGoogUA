@@ -68,7 +68,12 @@ class BUDGoogUA extends SC_Plugin_Base {
  			$objTransform->select('head', 0)->appendChild(file_get_contents(PLUGIN_UPLOAD_REALDIR . self::PLUGIN_TEMPLATES_PATH . 'plg_BUDGoogUA_header.tpl'));
  			$source = $objTransform->getHTML();
 		}
-	}
+		elseif (strcmp($filename, 'home.tpl') === 0) {
+			$objTransform = new SC_Helper_Transform_Ex($source);
+			$objTransform->select('#home')->appendFirst(file_get_contents(PLUGIN_UPLOAD_REALDIR . self::PLUGIN_TEMPLATES_PATH . 'plg_budgoogua_chart.tpl'));
+ 			$source = $objTransform->getHTML();
+		}
+    }
 	
 	function preProcess(LC_Page_Ex $objPage) {
 		$objPage->plg_budgoogua_tracking_id = plg_BUDGoogUA_SC_Utils::sfGetTrackingID();
@@ -89,6 +94,92 @@ class BUDGoogUA extends SC_Plugin_Base {
 		}
 		
 		$objPluginInstaller->sql($sql);
+	}
+	
+    /**
+     * ホーム表示前
+     * 
+     * @param LC_Page_EX $objPage 
+     * @return なし
+     */
+	function LC_Page_Admin_Home_action_after($objPage) {
+		//$arrParam = $this->loadData($objPage);
+		$arrParam = array('ga_id' => 'oak.sano@gmail.com', 'ga_pw' => 'D5iZQqRz');
+		
+		if (empty($arrParam['ga_id']) || empty($arrParam['ga_pw'])) {
+			return false;
+		}
+		
+		require 'class/ext/gapi.class.php';
+		
+		try {
+			$objGAClient = new gapi($arrParam['ga_id'] , $arrParam['ga_pw']);
+		}
+		catch (Exception $e) {
+			$objPage->tpl_budgoogua_auth_error = true;
+		};
+		
+// 		if (!empty($objGAClient)) {
+// 			$ga_profile_id = $arrParam['ga_view'];
+// 			$dimensions    = array('year','month','day');
+// 			$metrics       = array('pageviews','visits', 'visitors', 'pageviews');
+// 			$sort_metric   = array('year','month','day');
+// 			$filter        = '';
+// 			$start_date    = date("Y-m-01");
+// 			$end_date      = date("Y-m-t");
+// 			$start_index   = 1;
+// 			$max_results   = 10000;
+		
+// 			$objGAClient->requestReportData(
+// 					$ga_profile_id,
+// 					$dimensions,
+// 					$metrics,
+// 					$sort_metric,
+// 					$filter,
+// 					$start_date,
+// 					$end_date,
+// 					$start_index,
+// 					$max_results
+// 			);
+// 			$arrGoogleAnalyticsGraph = $objGAClient->getResults();
+		
+// 			/* 売上情報取得 */
+// 			$objQuery = SC_Query_Ex::getSingletonInstance();
+// 			$where    = ' del_flg = 0';
+// 			$where   .= ' AND create_date >= ?';
+// 			$where   .= ' AND create_date <= ?';
+// 			$where   .= ' AND status <> ?';
+		
+// 			$arrWhereVal[] = $start_date;
+// 			$arrWhereVal[] = $end_date;
+// 			$arrWhereVal[] = ORDER_CANCEL;
+		
+// 			$objQuery->setGroupBy('str_date');
+// 			$objQuery->setOrder('str_date');
+		
+// 			$dbFactory = SC_DB_DBFactory_Ex::getInstance();
+// 			$col = $dbFactory->getOrderTotalDaysWhereSql('');
+		
+// 			$arrTotalResults = $objQuery->select($col, 'dtb_order', $where, $arrWhereVal);
+// 			$arrTotalMerge = array();
+		
+// 			/* GA DATA and Salse Data Merge */
+// 			foreach ($arrGoogleAnalyticsGraph as $row) {
+// 				$strDate = $row->getYear() . '-' .$row->getMonth() . '-' . $row->getDay();
+// 				$arrTotalMerge[]['total'] = 0;
+// 				foreach ($arrTotalResults as $data) {
+// 					if ($data['str_date'] === $strDate) {
+// 						$arrTotalMerge[]['total'] = $data['total'];
+// 						break;
+// 					}
+// 				}
+// 			}
+		
+// 			$objPage->arrGoogleAnalyticsGraph = $arrGoogleAnalyticsGraph;
+// 			$objPage->arrTotalMerge = $arrTotalMerge;
+// 			$objPage->strGoogleAnalyticsStartDate = $start_date;
+// 			$objPage->strGoogleAnalyticsEndDate = $end_date;
+// 		}
 	}
 }
 ?>

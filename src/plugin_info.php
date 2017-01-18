@@ -30,7 +30,7 @@
 class plugin_info{
     static $PLUGIN_CODE       = "BUDGoogUA";
     static $PLUGIN_NAME       = "Google Universal Analytics";
-    static $PLUGIN_VERSION    = "1.0.0";
+    static $PLUGIN_VERSION    = "1.0.1";
     static $COMPLIANT_VERSION = "2.12.0+";
     static $AUTHOR            = "Buddying Inc.";
     static $DESCRIPTION       = "Google Universal Analyticsをページに挿入します";
@@ -38,7 +38,9 @@ class plugin_info{
     static $AUTHOR_SITE_URL   = "http://buddying.jp/";
     static $CLASS_NAME        = "BUDGoogUA";
     static $HOOK_POINTS       = array(
-            array('prefilterTransform', 'prefilterTransform')
+            array('prefilterTransform', 'prefilterTransform'),
+    		array('LC_Page_Admin_Home_action_after', 'LC_Page_Admin_Home_action_after')
+    		
     );
     static $LICENSE           = "LGPL";
 }
