@@ -54,11 +54,11 @@ class BUDGoogUA extends SC_Plugin_Base {
 		self::executeSQL($objPluginInstaller, plg_BUDGoogUA_SC_Utils::sfGetDropTableDDL());
     }
     
-    function enable($plugins) {
+    function enable($arrPlugin) {
     	// nop
     }
     
-    function disable($plugins) {
+    function disable($arrPlugin) {
     	// nop
     }
     
